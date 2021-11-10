@@ -306,8 +306,8 @@ class game {
         let s = " steps"
         if (step < 2)
             s = " step"
-
-        this.context.fillText(step + s + " left to get to the red box", this.getSize(), this.getSize());
+        this.context.textAlign = "center";
+        this.context.fillText(step + s + " left to get to the red box", game_W / 2, this.getSize());
     }
 
     drawKnight(type) {
