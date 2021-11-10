@@ -10,7 +10,7 @@ xKNight = yKNight = 3;
 xKNight2 = yKNight2 = xDestination = yDestination = 0;
 typeMove = 0;
 N = 8;
-Nrock = 5;
+Nrock = 10;
 data = Array.from(new Array(N), () => Array.from(new Array(N), () => 0));
 win = false;
 step = 1;
@@ -206,6 +206,8 @@ class game {
 
             Xalignment = (game_W - min) / 2 + sizeBlock;
             Yalignment = (game_H - min) / 2 + 3 * sizeBlock / 2;
+            if (game_W < game_H)
+                Yalignment = (game_H - min) / 2 + sizeBlock;
         }
     }
 
