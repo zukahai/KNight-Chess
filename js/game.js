@@ -246,7 +246,7 @@ class game {
 
     randomData() {
         data = Array.from(new Array(N), () => Array.from(new Array(N), () => 0));
-        data[xKNight][yKNight] = 2;
+        // data[xKNight][yKNight] = 2;
         let x, y;
         x = xKNight = Math.round(Math.random() * (N * N * N)) % N;
         y = yKNight = Math.round(Math.random() * (N * N * N)) % N;
