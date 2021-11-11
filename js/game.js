@@ -131,7 +131,7 @@ class game {
                 y = Yalignment + sizeBlock / 2;
             if (x >= Xalignment + sizeChess - sizeBlock / 2)
                 x = Xalignment + sizeChess - sizeBlock / 2;
-            if (y >= Yalignment + sizeChess)
+            if (y >= Yalignment + sizeChess - sizeBlock / 2)
                 y = Yalignment + sizeChess - sizeBlock / 2;
             if (typeMove == 1) {
                 xKNight2 = x;
