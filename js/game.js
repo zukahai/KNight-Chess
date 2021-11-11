@@ -31,7 +31,7 @@ class game {
         this.chessBoard = new chessboard(this);
         this.render();
         this.randomData();
-        step = this.dfs().length - 1;
+        step = this.bfs().length - 1;
 
         this.loop();
 
@@ -211,7 +211,7 @@ class game {
         }
     }
 
-    dfs() {
+    bfs() {
         let stack = [];
         let a = Array.from(new Array(N * N), () => -1);
         stack.push({ x: xKNight, y: yKNight });
