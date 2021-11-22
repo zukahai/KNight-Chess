@@ -14,6 +14,7 @@ Nrock = 10;
 data = Array.from(new Array(N), () => Array.from(new Array(N), () => 0));
 win = false;
 step = 1;
+level = 1;
 
 blockArrived = []
 
@@ -28,15 +29,45 @@ class game {
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
         document.body.appendChild(this.canvas);
-        this.chessBoard = new chessboard(this);
-        this.render();
-        this.randomData();
-        step = this.bfs().length - 1;
+
+        this.initData();
 
         this.loop();
 
         this.listenMouse();
         this.listenTouch();
+    }
+
+    initData() {
+        let k = 2;
+        if (level < 3) {
+            Nrock = 20;
+            k = 2;
+        }
+
+        if (level >= 10) {
+            Nrock = 15;
+            k = 3;
+        }
+
+        if (level >= 20) {
+            Nrock = 10;
+            k = 4;
+        }
+
+        if (level >= 30) {
+            Nrock = 10;
+            k = 5;
+        }
+        blockArrived = [];
+        this.chessBoard = new chessboard(this);
+        this.render();
+        do {
+            this.randomData();
+            step = this.bfs().length - 1;
+            Nrock--;
+        } while (step < k);
+        console.log(Nrock, ' ', step);
     }
 
     listenTouch() {
@@ -93,8 +124,9 @@ class game {
                 step--;
 
                 if (X == xDestination && Y == yDestination) {
-                    win = true;
-                    window.alert("Win");
+                    this.initData();
+                    level++;
+                    console.log("Win");
                 } else if (step == 0) {
                     window.alert("Lost");
                 }
@@ -157,8 +189,9 @@ class game {
                 step--;
 
                 if (X == xDestination && Y == yDestination) {
-                    win = true;
-                    window.alert("Win");
+                    this.initData();
+                    console.log("Win");
+                    level++;
                 } else if (step == 0) {
                     window.alert("Lost");
                 }
@@ -227,7 +260,7 @@ class game {
             for (let I = 0; I < xArr.length; I++) {
                 x = xArr[I];
                 y = yArr[I];
-                if (this.isPoint(x, y) && a[x * N + y] == -1) {
+                if (this.isPoint(x, y) && a[x * N + y] == -1 && data[x][y] != 1) {
                     a[x * N + y] = i * N + j;
                     stack.push({ x: x, y: y });
                 }
@@ -237,6 +270,8 @@ class game {
         let ans = [{ x: xDestination, y: yDestination }];
         x = xDestination;
         y = yDestination;
+        if (a[x][y] == -1)
+            return ans;
         while (a[x * N + y] != -100) {
             let k = a[x * N + y];
             x = Math.floor(k / N);
@@ -308,6 +343,7 @@ class game {
             s = " step"
         this.context.textAlign = "center";
         this.context.fillText(step + s + " left to get to the red box", game_W / 2, Yalignment - sizeBlock / 2);
+        this.context.fillText("Level " + level, game_W / 2, Yalignment + sizeBlock / 2 + sizeChess);
     }
 
     drawKnight(type) {
